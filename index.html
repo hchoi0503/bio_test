@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biomed Quiz | NCCAOM Mastery</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="css_style.css">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300b4a6'%3E%3Cpath d='M12 2L2 7v10l10 5 10-5V7L12 2z'/%3E%3C/svg%3E">
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="nav">
+            <h1>🧠 Biomed Quiz</h1>
+            <div class="nav-links">
+                <button onclick="showSection('dashboard')">Dashboard</button>
+                <button onclick="showSection('quiz')">Start Quiz</button>
+                <button onclick="showSection('review')">Review</button>
+                <button onclick="toggleTheme()">🌙</button>
+            </div>
+        </nav>
+
+        <!-- Dashboard -->
+        <section id="dashboard-section" class="section active">
+            <h2>Dashboard</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Questions</h3>
+                    <p id="total-q">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Mastered</h3>
+                    <p id="mastered-q">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>In Progress</h3>
+                    <p id="progress-q">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Accuracy</h3>
+                    <p id="accuracy">0%</p>
+                </div>
+            </div>
+            <button onclick="startQuiz(10)" class="btn-primary">Start 10 Questions</button>
+            <button onclick="startQuiz(20)" class="btn-secondary">Start 20 Questions</button>
+        </section>
+
+        <!-- Quiz Section -->
+        <section id="quiz-section" class="section">
+            <div id="quiz-container">
+                <h2 id="question-text"></h2>
+                <div id="options"></div>
+                <button id="next-btn" onclick="nextQuestion()" style="display:none;">Next</button>
+            </div>
+        </section>
+
+        <!-- Review Section -->
+        <section id="review-section" class="section">
+            <h2>Question Review</h2>
+            <div id="review-list"></div>
+        </section>
+    </div>
+
+    <script src="js_utils.js"></script>
+    <script src="js_data.js"></script>
+    <script src="js_stats.js"></script>
+    <script src="js_quiz.js"></script>
+    <script src="js_main.js"></script>
+</body>
+</html>
