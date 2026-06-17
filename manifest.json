@@ -1,0 +1,16 @@
+{
+  "name": "Biomed Quiz - NCCAOM Mastery",
+  "short_name": "Biomed Quiz",
+  "description": "Master NCCAOM Biomedicine with smart spaced practice",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#00b4a6",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300b4a6'%3E%3Cpath d='M12 2L2 7v10l10 5 10-5V7L12 2z'/%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    }
+  ]
+}
