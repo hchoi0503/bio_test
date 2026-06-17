@@ -3,69 +3,300 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Biomed Quiz | NCCAOM Mastery</title>
-    <link rel="manifest" href="manifest.json">
+    <meta name="description" content="NCCAOM Biomedicine Mastery App - Focused study tool for the NCCAOM Biomedicine exam">
+    <meta name="theme-color" content="#0ea47a">
+    <title>NCCAOM Biomed • Mastery App</title>
+    
+    <!-- Tailwind CSS via CDN (simple & fast) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom Styles -->
     <link rel="stylesheet" href="css_style.css">
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300b4a6'%3E%3Cpath d='M12 2L2 7v10l10 5 10-5V7L12 2z'/%3E%3C/svg%3E">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
 </head>
-<body>
-    <div class="container">
-        <!-- Navigation -->
-        <nav class="nav">
-            <h1>🧠 Biomed Quiz</h1>
-            <div class="nav-links">
-                <button onclick="showSection('dashboard')">Dashboard</button>
-                <button onclick="showSection('quiz')">Start Quiz</button>
-                <button onclick="showSection('review')">Review</button>
-                <button onclick="toggleTheme()">🌙</button>
-            </div>
-        </nav>
-
-        <!-- Dashboard -->
-        <section id="dashboard-section" class="section active">
-            <h2>Dashboard</h2>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <h3>Total Questions</h3>
-                    <p id="total-q">0</p>
+<body class="bg-zinc-950 text-zinc-200">
+    <!-- Top Header -->
+    <header class="border-b border-zinc-800 bg-zinc-900 sticky top-0 z-50">
+        <div class="max-w-screen-xl mx-auto px-5 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-x-3">
+                <div class="w-10 h-10 bg-emerald-600 rounded-2xl flex items-center justify-center">
+                    <i class="fa-solid fa-stethoscope text-white text-2xl"></i>
                 </div>
-                <div class="stat-card">
-                    <h3>Mastered</h3>
-                    <p id="mastered-q">0</p>
-                </div>
-                <div class="stat-card">
-                    <h3>In Progress</h3>
-                    <p id="progress-q">0</p>
-                </div>
-                <div class="stat-card">
-                    <h3>Accuracy</h3>
-                    <p id="accuracy">0%</p>
+                <div>
+                    <h1 class="font-semibold text-2xl tracking-tight">NCCAOM Biomed</h1>
+                    <p class="text-emerald-500 text-xs -mt-1 tracking-widest">MASTERY APP</p>
                 </div>
             </div>
-            <button onclick="startQuiz(10)" class="btn-primary">Start 10 Questions</button>
-            <button onclick="startQuiz(20)" class="btn-secondary">Start 20 Questions</button>
-        </section>
-
-        <!-- Quiz Section -->
-        <section id="quiz-section" class="section">
-            <div id="quiz-container">
-                <h2 id="question-text"></h2>
-                <div id="options"></div>
-                <button id="next-btn" onclick="nextQuestion()" style="display:none;">Next</button>
+            
+            <div class="flex items-center gap-x-2 text-sm">
+                <div class="hidden md:flex items-center gap-x-1.5 px-3 py-1.5 bg-zinc-800 border border-zinc-700 rounded-3xl text-xs">
+                    <i class="fa-solid fa-check-double text-emerald-400"></i>
+                    <span id="header-mastered">0/15</span>
+                </div>
+                <button onclick="showSection('dashboard')" 
+                        class="px-4 py-2 text-xs font-medium border border-zinc-700 hover:bg-zinc-800 rounded-3xl flex items-center gap-x-2">
+                    <i class="fa-solid fa-home"></i>
+                    <span class="hidden sm:inline">Dashboard</span>
+                </button>
             </div>
-        </section>
+        </div>
+    </header>
 
-        <!-- Review Section -->
-        <section id="review-section" class="section">
-            <h2>Question Review</h2>
-            <div id="review-list"></div>
-        </section>
+    <!-- Main Navigation -->
+    <nav class="max-w-screen-xl mx-auto px-5 pt-4 pb-2 flex flex-wrap gap-2 border-b border-zinc-800">
+        <button onclick="showSection('dashboard')" id="nav-dashboard"
+                class="nav-btn active px-5 py-2 text-sm font-medium rounded-3xl flex items-center gap-x-2 border border-emerald-600 bg-emerald-900/30 text-emerald-300">
+            <i class="fa-solid fa-chart-line w-4"></i>
+            <span>Dashboard</span>
+        </button>
+        
+        <button onclick="showSection('quiz')" id="nav-quiz"
+                class="nav-btn px-5 py-2 text-sm font-medium rounded-3xl flex items-center gap-x-2 border border-zinc-700 hover:bg-zinc-800">
+            <i class="fa-solid fa-play w-4"></i>
+            <span>Quiz</span>
+        </button>
+        
+        <button onclick="showSection('bank')" id="nav-bank"
+                class="nav-btn px-5 py-2 text-sm font-medium rounded-3xl flex items-center gap-x-2 border border-zinc-700 hover:bg-zinc-800">
+            <i class="fa-solid fa-list w-4"></i>
+            <span>Question Bank</span>
+        </button>
+        
+        <button onclick="showSection('analytics')" id="nav-analytics"
+                class="nav-btn px-5 py-2 text-sm font-medium rounded-3xl flex items-center gap-x-2 border border-zinc-700 hover:bg-zinc-800">
+            <i class="fa-solid fa-chart-bar w-4"></i>
+            <span>Analytics</span>
+        </button>
+    </nav>
+
+    <!-- Main Content Container -->
+    <div class="max-w-screen-xl mx-auto px-5 py-6">
+        
+        <!-- DASHBOARD SECTION -->
+        <div id="dashboard" class="section active">
+            <div class="mb-6">
+                <h2 class="text-3xl font-semibold tracking-tight">Dashboard</h2>
+                <p class="text-zinc-400 text-sm mt-1">Track your mastery and focus your study time.</p>
+            </div>
+
+            <!-- Stats Row -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                <!-- Mastered Card -->
+                <div class="bg-zinc-900 border border-zinc-700 rounded-3xl p-5">
+                    <div class="flex justify-between">
+                        <div>
+                            <p class="text-xs uppercase tracking-widest text-zinc-500">Mastered</p>
+                            <div class="mt-2 flex items-baseline">
+                                <span id="dash-mastered" class="text-5xl font-semibold tabular-nums">0</span>
+                                <span class="text-xl text-zinc-400 ml-1">/ 15</span>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-tachometer-alt text-4xl text-emerald-500/70"></i>
+                    </div>
+                    <div class="mt-4 h-2 bg-zinc-800 rounded-full overflow-hidden">
+                        <div id="mastered-progress-bar" class="h-2 bg-emerald-500 rounded-full transition-all" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <!-- Accuracy Card -->
+                <div class="bg-zinc-900 border border-zinc-700 rounded-3xl p-5">
+                    <div class="flex justify-between">
+                        <div>
+                            <p class="text-xs uppercase tracking-widest text-zinc-500">Overall Accuracy</p>
+                            <div class="mt-2 flex items-baseline">
+                                <span id="dash-accuracy" class="text-5xl font-semibold tabular-nums">0</span>
+                                <span class="text-xl text-zinc-400 ml-1">%</span>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-bullseye text-4xl text-sky-400/70"></i>
+                    </div>
+                    <p id="dash-attempts" class="text-xs text-zinc-400 mt-5">0 attempts</p>
+                </div>
+
+                <!-- Domain Breakdown -->
+                <div class="bg-zinc-900 border border-zinc-700 rounded-3xl p-5">
+                    <p class="text-xs uppercase tracking-widest text-zinc-500 mb-3">Domain Accuracy</p>
+                    
+                    <div class="space-y-3 text-sm">
+                        <!-- Domain I -->
+                        <div>
+                            <div class="flex justify-between text-xs mb-1">
+                                <span class="px-2 py-0.5 rounded bg-blue-900/60 text-blue-300 text-[10px]">Domain I • 80%</span>
+                                <span id="dash-dom1-acc" class="font-mono text-blue-300">—</span>
+                            </div>
+                            <div class="h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+                                <div id="dash-dom1-bar" class="h-1.5 bg-blue-500 rounded-full transition-all" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Domain II -->
+                        <div>
+                            <div class="flex justify-between text-xs mb-1">
+                                <span class="px-2 py-0.5 rounded bg-amber-900/60 text-amber-300 text-[10px]">Domain II • 20%</span>
+                                <span id="dash-dom2-acc" class="font-mono text-amber-300">—</span>
+                            </div>
+                            <div class="h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+                                <div id="dash-dom2-bar" class="h-1.5 bg-amber-500 rounded-full transition-all" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+                <button onclick="startQuickQuiz(5)" 
+                        class="flex flex-col items-center justify-center gap-y-2 border border-zinc-700 hover:border-emerald-600 hover:bg-zinc-900 transition-colors rounded-3xl py-5 text-sm">
+                    <i class="fa-solid fa-play text-emerald-400 text-xl"></i>
+                    <span>Quick Quiz (5)</span>
+                </button>
+                <button onclick="startQuickQuiz(10)" 
+                        class="flex flex-col items-center justify-center gap-y-2 border border-zinc-700 hover:border-emerald-600 hover:bg-zinc-900 transition-colors rounded-3xl py-5 text-sm">
+                    <i class="fa-solid fa-play text-emerald-400 text-xl"></i>
+                    <span>Quick Quiz (10)</span>
+                </button>
+                <button onclick="showSection('bank')" 
+                        class="flex flex-col items-center justify-center gap-y-2 border border-zinc-700 hover:border-emerald-600 hover:bg-zinc-900 transition-colors rounded-3xl py-5 text-sm">
+                    <i class="fa-solid fa-search text-xl"></i>
+                    <span>Browse Bank</span>
+                </button>
+                <button onclick="showImportModal()" 
+                        class="flex flex-col items-center justify-center gap-y-2 border border-zinc-700 hover:border-emerald-600 hover:bg-zinc-900 transition-colors rounded-3xl py-5 text-sm">
+                    <i class="fa-solid fa-upload text-xl"></i>
+                    <span>Import Bank</span>
+                </button>
+            </div>
+
+            <!-- Weak Areas -->
+            <div class="bg-zinc-900 border border-zinc-700 rounded-3xl p-5">
+                <h3 class="font-semibold mb-3 flex items-center gap-x-2">
+                    <i class="fa-solid fa-exclamation-triangle text-amber-400"></i>
+                    <span>Focus Areas</span>
+                </h3>
+                <div id="weak-areas-list" class="text-sm space-y-1 min-h-[60px]">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- QUIZ SECTION -->
+        <div id="quiz" class="section hidden">
+            <div class="max-w-2xl mx-auto">
+                <div class="flex items-center justify-between mb-5">
+                    <h2 class="text-2xl font-semibold">Quiz Mode</h2>
+                    <button onclick="showSection('dashboard')" class="text-xs px-4 py-2 border border-zinc-700 rounded-3xl hover:bg-zinc-800">Exit</button>
+                </div>
+
+                <!-- Quiz Setup -->
+                <div id="quiz-setup" class="bg-zinc-900 border border-zinc-700 rounded-3xl p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="text-xs text-zinc-400 block mb-2">NUMBER OF QUESTIONS</label>
+                            <div class="flex gap-2">
+                                <button onclick="setQuizLength(5)" class="quiz-len-btn flex-1 py-2 text-sm border border-zinc-600 rounded-2xl hover:bg-zinc-800" data-len="5">5</button>
+                                <button onclick="setQuizLength(10)" class="quiz-len-btn flex-1 py-2 text-sm border border-zinc-600 rounded-2xl hover:bg-zinc-800" data-len="10">10</button>
+                                <button onclick="setQuizLength(15)" class="quiz-len-btn flex-1 py-2 text-sm border border-emerald-600 bg-emerald-900/30 text-emerald-300 rounded-2xl" data-len="15">15</button>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="text-xs text-zinc-400 block mb-2">FILTER</label>
+                            <div class="flex gap-2">
+                                <button onclick="setDomainFilter('all')" id="filter-all" class="flex-1 py-2 text-sm border border-emerald-600 bg-emerald-900/30 text-emerald-300 rounded-2xl">All</button>
+                                <button onclick="setDomainFilter('I')" id="filter-I" class="flex-1 py-2 text-sm border border-zinc-600 rounded-2xl hover:bg-zinc-800">Domain I</button>
+                                <button onclick="setDomainFilter('II')" id="filter-II" class="flex-1 py-2 text-sm border border-zinc-600 rounded-2xl hover:bg-zinc-800">Domain II</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="startQuiz()" 
+                            class="mt-6 w-full py-3 bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white font-semibold rounded-3xl flex items-center justify-center gap-x-2">
+                        <i class="fa-solid fa-play"></i>
+                        <span>Start Quiz</span>
+                    </button>
+                </div>
+
+                <!-- Active Quiz -->
+                <div id="quiz-active" class="hidden bg-zinc-900 border border-zinc-700 rounded-3xl p-6">
+                    <div class="flex justify-between items-center mb-4 text-sm">
+                        <div id="quiz-progress-badge" class="px-3 py-1 bg-zinc-800 border border-zinc-700 rounded-3xl font-mono text-xs"></div>
+                        <div class="text-xs text-zinc-400" id="quiz-counter"></div>
+                    </div>
+                    
+                    <div id="quiz-question" class="font-medium text-lg leading-snug mb-5"></div>
+                    
+                    <div id="quiz-options" class="space-y-2 mb-4"></div>
+                    
+                    <div id="quiz-feedback" class="hidden pt-4 border-t border-zinc-700">
+                        <div id="feedback-content"></div>
+                        <div class="mt-4 flex gap-x-2">
+                            <button onclick="nextQuestion()" class="flex-1 py-2.5 bg-white text-zinc-900 font-semibold rounded-3xl text-sm">Next Question</button>
+                            <button onclick="flagCurrentQuestion()" class="px-4 py-2.5 border border-zinc-600 rounded-3xl text-sm flex items-center gap-x-2">
+                                <i class="fa-solid fa-flag"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- QUESTION BANK SECTION -->
+        <div id="bank" class="section hidden">
+            <div class="flex justify-between items-end mb-4">
+                <div>
+                    <h2 class="text-2xl font-semibold">Question Bank</h2>
+                    <p class="text-xs text-zinc-400">15 questions • Click to view details or practice</p>
+                </div>
+                <input id="bank-search" type="text" placeholder="Search questions..." 
+                       onkeyup="filterQuestionBank()"
+                       class="bg-zinc-900 border border-zinc-700 px-4 py-2 text-sm rounded-3xl w-64 focus:outline-none focus:border-emerald-600">
+            </div>
+            
+            <div id="question-bank-grid" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <!-- Populated dynamically by js_data.js / js_main.js -->
+            </div>
+        </div>
+
+        <!-- ANALYTICS SECTION -->
+        <div id="analytics" class="section hidden">
+            <h2 class="text-2xl font-semibold mb-4">Analytics</h2>
+            <div class="bg-zinc-900 border border-zinc-700 rounded-3xl p-6">
+                <p class="text-zinc-400">Detailed performance analytics coming in the next update.</p>
+                <p class="text-xs text-zinc-500 mt-2">Currently showing basic stats on the Dashboard.</p>
+            </div>
+        </div>
+
     </div>
 
+    <!-- Question Detail Modal (will be populated by JS) -->
+    <div id="question-modal" class="hidden fixed inset-0 bg-black/90 flex items-center justify-center z-[100] p-4">
+        <div onclick="closeQuestionModal()" class="absolute inset-0"></div>
+        <div onclick="event.stopImmediatePropagation()" class="relative bg-zinc-900 border border-zinc-700 rounded-3xl max-w-2xl w-full p-6 max-h-[90vh] overflow-auto">
+            <!-- Content injected by JS -->
+        </div>
+    </div>
+
+    <!-- Import Modal -->
+    <div id="import-modal" class="hidden fixed inset-0 bg-black/90 flex items-center justify-center z-[100] p-4">
+        <div onclick="closeImportModal()" class="absolute inset-0"></div>
+        <div onclick="event.stopImmediatePropagation()" class="relative bg-zinc-900 border border-zinc-700 rounded-3xl max-w-lg w-full p-6">
+            <h3 class="font-semibold mb-2">Import Updated Question Bank</h3>
+            <p class="text-xs text-zinc-400 mb-3">Paste the full JSON array from your GitHub questions.json</p>
+            <textarea id="import-textarea" class="w-full h-48 bg-zinc-950 border border-zinc-700 rounded-2xl p-4 font-mono text-xs" placeholder='[{"id":"BIO-001", ...}]'></textarea>
+            <div class="flex gap-x-3 mt-4">
+                <button onclick="performImport()" class="flex-1 py-2.5 bg-emerald-600 rounded-3xl text-sm font-semibold">Import & Merge</button>
+                <button onclick="closeImportModal()" class="px-6 py-2.5 border border-zinc-600 rounded-3xl text-sm">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts - Load in correct order -->
     <script src="js_utils.js"></script>
     <script src="js_data.js"></script>
     <script src="js_stats.js"></script>
     <script src="js_quiz.js"></script>
+    <script src="js_srs.js"></script>
     <script src="js_main.js"></script>
 </body>
 </html>
