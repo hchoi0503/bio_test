@@ -238,3 +238,55 @@ window.getQuestionsByDomain = getQuestionsByDomain;
 window.getFlaggedQuestions = getFlaggedQuestions;
 window.getWeakQuestions = getWeakQuestions;
 window.saveUserProgress = saveUserProgress;
+
+/**
+ * Reset ALL user progress (use with caution)
+ * This clears mastered status, streaks, notes, flags, etc.
+ */
+function resetAllProgress() {
+    if (!confirm('Are you sure you want to reset ALL progress? This cannot be undone.')) {
+        return;
+    }
+
+    // Clear progress for all questions
+    window.userProgress = {};
+
+    // Re-initialize default progress entries
+    if (window.questions && window.questions.length > 0) {
+        window.questions.forEach(q => {
+            window.userProgress[q.id] = {
+                seen: 0,
+                correct_streak: 0,
+                miss_count: 0,
+                mastered: false,
+                flagged: false,
+                note: '',
+                last_reviewed: null
+            };
+        });
+    }
+
+    saveUserProgress();
+
+    // Refresh UI
+    if (typeof mergeProgressIntoQuestions === 'function') {
+        mergeProgressIntoQuestions();
+    }
+    if (typeof renderDashboard === 'function') {
+        renderDashboard();
+    }
+    if (typeof renderQuestionBank === 'function') {
+        renderQuestionBank();
+    }
+
+    if (typeof showToast === 'function') {
+        showToast('All progress has been reset.', 'success');
+    } else {
+        alert('All progress has been reset.');
+    }
+
+    console.log('[Data] All progress has been reset.');
+}
+
+// Make reset function globally available
+window.resetAllProgress = resetAllProgress;
