@@ -172,10 +172,16 @@
 
             <!-- Weak Areas -->
             <div class="bg-zinc-900 border border-zinc-700 rounded-3xl p-5">
-                <h3 class="font-semibold mb-3 flex items-center gap-x-2">
-                    <i class="fa-solid fa-exclamation-triangle text-amber-400"></i>
-                    <span>Focus Areas</span>
-                </h3>
+                <div class="flex justify-between items-center mb-3">
+                    <h3 class="font-semibold flex items-center gap-x-2">
+                        <i class="fa-solid fa-exclamation-triangle text-amber-400"></i>
+                        <span>Focus Areas</span>
+                    </h3>
+                    <button onclick="resetAllProgress()" 
+                            class="text-xs px-3 py-1 border border-red-600/60 text-red-400 hover:bg-red-900/20 rounded-2xl transition-colors">
+                        Reset All Progress
+                    </button>
+                </div>
                 <div id="weak-areas-list" class="text-sm space-y-1 min-h-[60px]">
                     <!-- Populated by JS -->
                 </div>
