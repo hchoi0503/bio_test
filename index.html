@@ -163,11 +163,6 @@
                     <i class="fa-solid fa-search text-xl"></i>
                     <span>Browse Bank</span>
                 </button>
-                <button onclick="showImportModal()" 
-                        class="flex flex-col items-center justify-center gap-y-2 border border-zinc-700 hover:border-emerald-600 hover:bg-zinc-900 transition-colors rounded-3xl py-5 text-sm">
-                    <i class="fa-solid fa-upload text-xl"></i>
-                    <span>Import Bank</span>
-                </button>
             </div>
 
             <!-- Weak Areas -->
@@ -284,18 +279,7 @@
     </div>
 
     <!-- Import Modal -->
-    <div id="import-modal" class="hidden fixed inset-0 bg-black/90 flex items-center justify-center z-[100] p-4">
-        <div onclick="closeImportModal()" class="absolute inset-0"></div>
-        <div onclick="event.stopImmediatePropagation()" class="relative bg-zinc-900 border border-zinc-700 rounded-3xl max-w-lg w-full p-6">
-            <h3 class="font-semibold mb-2">Import Updated Question Bank</h3>
-            <p class="text-xs text-zinc-400 mb-3">Paste the full JSON array from your GitHub questions.json</p>
-            <textarea id="import-textarea" class="w-full h-48 bg-zinc-950 border border-zinc-700 rounded-2xl p-4 font-mono text-xs" placeholder='[{"id":"BIO-001", ...}]'></textarea>
-            <div class="flex gap-x-3 mt-4">
-                <button onclick="performImport()" class="flex-1 py-2.5 bg-emerald-600 rounded-3xl text-sm font-semibold">Import & Merge</button>
-                <button onclick="closeImportModal()" class="px-6 py-2.5 border border-zinc-600 rounded-3xl text-sm">Cancel</button>
-            </div>
-        </div>
-    </div>
+    <!-- Import modal removed (user updates questions.json directly via GitHub) -->
 
     <!-- Scripts - Load in correct order -->
     <script src="js_utils.js"></script>

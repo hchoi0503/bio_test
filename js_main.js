@@ -337,53 +337,7 @@ function toggleFlag(questionId, btn) {
 }
 
 // ============================================
-// Import Modal
-// ============================================
-
-function showImportModal() {
-    const modal = document.getElementById('import-modal');
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
-    
-    // Focus textarea
-    setTimeout(() => {
-        const textarea = document.getElementById('import-textarea');
-        if (textarea) textarea.focus();
-    }, 100);
-}
-
-function closeImportModal() {
-    const modal = document.getElementById('import-modal');
-    modal.classList.remove('flex');
-    modal.classList.add('hidden');
-}
-
-function performImport() {
-    const textarea = document.getElementById('import-textarea');
-    if (!textarea) return;
-
-    let newQuestions;
-    try {
-        newQuestions = JSON.parse(textarea.value.trim());
-    } catch (e) {
-        alert('Invalid JSON. Please paste a valid array from your questions.json file.');
-        return;
-    }
-
-    const success = importNewQuestionBank(newQuestions);
-    
-    if (success) {
-        closeImportModal();
-        textarea.value = '';
-        
-        // Refresh current view
-        renderDashboard();
-        const bankSection = document.getElementById('bank');
-        if (bankSection && bankSection.classList.contains('active')) {
-            renderQuestionBank();
-        }
-    }
-}
+// Import functionality removed (user updates questions.json directly on GitHub)
 
 // ============================================
 // Quick Quiz Helpers
