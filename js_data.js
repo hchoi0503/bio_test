@@ -242,16 +242,17 @@ window.saveUserProgress = saveUserProgress;
 /**
  * Reset ALL user progress (use with caution)
  * This clears mastered status, streaks, notes, flags, etc.
+ * Also clears in-memory quiz state and forces UI refresh.
  */
 function resetAllProgress() {
     if (!confirm('Are you sure you want to reset ALL progress? This cannot be undone.')) {
         return;
     }
 
-    // Clear progress for all questions
+    // 1. Clear progress object
     window.userProgress = {};
 
-    // Re-initialize default progress entries
+    // 2. Re-initialize default progress for all questions
     if (window.questions && window.questions.length > 0) {
         window.questions.forEach(q => {
             window.userProgress[q.id] = {
@@ -266,26 +267,57 @@ function resetAllProgress() {
         });
     }
 
+    // 3. Clear in-memory quiz state (if exists)
+    if (typeof currentQuiz !== 'undefined') window.currentQuiz = [];
+    if (typeof currentQuizIndex !== 'undefined') window.currentQuizIndex = 0;
+    if (typeof currentQuizScore !== 'undefined') window.currentQuizScore = 0;
+    if (typeof currentQuestionId !== 'undefined') window.currentQuestionId = null;
+
+    // 4. Save cleared progress
     saveUserProgress();
 
-    // Refresh UI
+    // 5. Re-merge progress into questions
     if (typeof mergeProgressIntoQuestions === 'function') {
         mergeProgressIntoQuestions();
     }
+
+    // 6. Force refresh all relevant UI sections
     if (typeof renderDashboard === 'function') {
         renderDashboard();
     }
     if (typeof renderQuestionBank === 'function') {
         renderQuestionBank();
     }
+    if (typeof renderAnalytics === 'function') {
+        const analyticsSection = document.getElementById('analytics');
+        if (analyticsSection && analyticsSection.classList.contains('active')) {
+            renderAnalytics();
+        }
+    }
 
+    // 7. If Quiz section is currently active, reset its UI
+    const quizActive = document.getElementById('quiz-active');
+    const quizResults = document.getElementById('quiz-results');
+    const quizSetup = document.getElementById('quiz-setup');
+
+    if (quizActive && !quizActive.classList.contains('hidden')) {
+        quizActive.classList.add('hidden');
+    }
+    if (quizResults && !quizResults.classList.contains('hidden')) {
+        quizResults.classList.add('hidden');
+    }
+    if (quizSetup) {
+        quizSetup.classList.remove('hidden');
+    }
+
+    // 8. Feedback
     if (typeof showToast === 'function') {
-        showToast('All progress has been reset.', 'success');
+        showToast('All progress has been reset successfully.', 'success');
     } else {
         alert('All progress has been reset.');
     }
 
-    console.log('[Data] All progress has been reset.');
+    console.log('[Data] All progress has been fully reset.');
 }
 
 // Make reset function globally available

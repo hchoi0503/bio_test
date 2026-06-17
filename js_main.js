@@ -383,7 +383,19 @@ async function initializeApp() {
         await initializeData();
     }
 
-    // === PWA / Offline Support ===
+    // === PWA / Offline Support (TEMPORARILY DISABLED) ===
+    // We unregister any existing service worker to avoid caching issues during development.
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(registrations => {
+            for (let registration of registrations) {
+                registration.unregister();
+                console.log('[PWA] Service Worker unregistered for development');
+            }
+        });
+    }
+
+    // Uncomment the registration block below when we are ready for the final version.
+    /*
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('service-worker.js')
@@ -395,6 +407,7 @@ async function initializeApp() {
                 });
         });
     }
+    */
 
     // Initial render
     renderDashboard();
