@@ -88,7 +88,7 @@ function renderDashboard() {
     if (masteredEl) masteredEl.textContent = mastered;
     if (accuracyEl) accuracyEl.textContent = accuracy;
     if (attemptsEl) attemptsEl.textContent = `${totalSeen} attempts`;
-    if (headerMastered) headerMastered.textContent = `${mastered}/15`;
+    if (headerMastered) headerMastered.textContent = `${mastered}/${window.questions ? window.questions.length : 0}`;
 
     // Progress bar
     const progressBar = document.getElementById('mastered-progress-bar');

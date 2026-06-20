@@ -34,7 +34,7 @@
             <div class="flex items-center gap-x-2 text-sm">
                 <div class="hidden md:flex items-center gap-x-1.5 px-3 py-1.5 bg-zinc-800 border border-zinc-700 rounded-3xl text-xs">
                     <i class="fa-solid fa-check-double text-emerald-400"></i>
-                    <span id="header-mastered">0/15</span>
+                    <span id="header-mastered">0/<span id="header-total-questions">15</span></span>
                 </div>
                 <button onclick="showSection('dashboard')" 
                         class="px-4 py-2 text-xs font-medium border border-zinc-700 hover:bg-zinc-800 rounded-3xl flex items-center gap-x-2">
@@ -91,7 +91,7 @@
                             <p class="text-xs uppercase tracking-widest text-zinc-500">Mastered</p>
                             <div class="mt-2 flex items-baseline">
                                 <span id="dash-mastered" class="text-5xl font-semibold tabular-nums">0</span>
-                                <span class="text-xl text-zinc-400 ml-1">/ 15</span>
+                                <span class="text-xl text-zinc-400 ml-1">/ <span id="dash-total-questions">15</span></span>
                             </div>
                         </div>
                         <i class="fa-solid fa-tachometer-alt text-4xl text-emerald-500/70"></i>
