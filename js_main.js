@@ -427,6 +427,13 @@ async function initializeApp() {
     renderDashboard();
     renderQuestionBank();
 
+    // Ensure total questions are set even if renderDashboard is delayed
+    const totalQ = window.questions ? window.questions.length : 0;
+    const dashTotal = document.getElementById('dash-total-questions');
+    const headerTotal = document.getElementById('header-total-questions');
+    if (dashTotal) dashTotal.textContent = totalQ || '?';
+    if (headerTotal) headerTotal.textContent = totalQ || '?';
+
     // Set initial nav active state
     const dashboardNav = document.getElementById('nav-dashboard');
     if (dashboardNav) {
@@ -454,6 +461,61 @@ async function initializeApp() {
     });
 
     console.log('%c[NCCAOM Mastery App] Ready!', 'color:#0ea47a');
+}
+
+// Populate the sub-section filter dropdown dynamically
+function populateSubsectionFilter() {
+    const select = document.getElementById('subsection-filter');
+    if (!select || !window.questions) return;
+
+    // Get unique subsections
+    const subsections = new Set();
+    window.questions.forEach(q => {
+        if (q.subsection) subsections.add(q.subsection);
+    });
+
+    // Clear and add options
+    select.innerHTML = '';
+
+    // All option
+    const allOpt = document.createElement('option');
+    allOpt.value = 'all';
+    allOpt.textContent = 'All Questions';
+    select.appendChild(allOpt);
+
+    // Domain shortcuts
+    const dom1Opt = document.createElement('option');
+    dom1Opt.value = 'I';
+    dom1Opt.textContent = 'Domain I (all sub-sections)';
+    select.appendChild(dom1Opt);
+
+    const dom2Opt = document.createElement('option');
+    dom2Opt.value = 'II';
+    dom2Opt.textContent = 'Domain II (all sub-sections)';
+    select.appendChild(dom2Opt);
+
+    // Divider
+    const divider = document.createElement('option');
+    divider.disabled = true;
+    divider.textContent = '──────────────';
+    select.appendChild(divider);
+
+    // Individual sub-sections
+    [...subsections].sort().forEach(sub => {
+        const opt = document.createElement('option');
+        opt.value = sub;
+        opt.textContent = sub;
+        select.appendChild(opt);
+    });
+
+    // Set default to All
+    select.value = 'all';
+
+    // Listen for changes
+    select.onchange = () => {
+        // Store the selected filter globally
+        window.selectedFilter = select.value;
+    };
 }
 
 // Boot the app when DOM is ready

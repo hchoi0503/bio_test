@@ -54,8 +54,18 @@ function setDomainFilter(domain) {
 // ============================================
 
 function startQuiz() {
-    // Filter questions
-    let filtered = getQuestionsByDomain(selectedDomainFilter);
+    let filtered = [];
+
+    const filter = window.selectedFilter || 'all';
+
+    if (filter === 'all') {
+        filtered = [...window.questions];
+    } else if (filter === 'I' || filter === 'II') {
+        filtered = getQuestionsByDomain(filter);
+    } else {
+        // Specific sub-section (e.g. "I.A.1", "II.B")
+        filtered = window.questions.filter(q => q.subsection === filter);
+    }
 
     if (filtered.length === 0) {
         alert('No questions available for the selected filter.');
