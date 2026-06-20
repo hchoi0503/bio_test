@@ -474,13 +474,26 @@ async function initializeApp() {
 // Populate the sub-section filter dropdown dynamically
 function populateSubsectionFilter() {
     const select = document.getElementById('subsection-filter');
-    if (!select || !window.questions) return;
+    console.log('[Filter] populateSubsectionFilter called. select exists:', !!select, 'questions count:', window.questions ? window.questions.length : 0);
+
+    if (!select) {
+        console.warn('[Filter] subsection-filter element not found in DOM');
+        return;
+    }
+    if (!window.questions || window.questions.length === 0) {
+        console.warn('[Filter] No questions loaded yet');
+        return;
+    }
 
     // Get unique subsections
     const subsections = new Set();
     window.questions.forEach(q => {
-        if (q.subsection) subsections.add(q.subsection);
+        if (q.subsection && q.subsection.trim() !== '') {
+            subsections.add(q.subsection.trim());
+        }
     });
+
+    console.log('[Filter] Found unique subsections:', [...subsections]);
 
     // Clear and add options
     select.innerHTML = '';
@@ -518,12 +531,15 @@ function populateSubsectionFilter() {
 
     // Set default to All
     select.value = 'all';
+    window.selectedFilter = 'all';
 
     // Listen for changes
     select.onchange = () => {
-        // Store the selected filter globally
         window.selectedFilter = select.value;
+        console.log('[Filter] User selected:', window.selectedFilter);
     };
+
+    console.log('[Filter] Dropdown populated successfully with', subsections.size, 'sub-sections');
 }
 
 // Boot the app when DOM is ready
