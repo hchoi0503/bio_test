@@ -168,6 +168,12 @@ function renderQuestionBank(filteredQuestions = null) {
     const container = document.getElementById('question-bank-grid');
     if (!container) return;
 
+    // Update the total count in the header
+    const bankTotal = document.getElementById('bank-total-questions');
+    if (bankTotal && window.questions) {
+        bankTotal.textContent = window.questions.length;
+    }
+
     container.innerHTML = '';
 
     const toShow = filteredQuestions || window.questions || [];
