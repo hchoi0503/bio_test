@@ -107,6 +107,20 @@ function renderDashboard() {
     if (dom2AccEl) dom2AccEl.textContent = dom2Acc + '%';
     if (dom2Bar) dom2Bar.style.width = dom2Acc + '%';
 
+    // Dynamic Domain Labels (actual % of questions)
+    const totalQuestions = window.questions ? window.questions.length : 0;
+    const dom1Count = window.questions ? window.questions.filter(q => q.domain === 'I').length : 0;
+    const dom2Count = totalQuestions - dom1Count;
+    
+    const dom1Pct = totalQuestions > 0 ? Math.round((dom1Count / totalQuestions) * 100) : 0;
+    const dom2Pct = totalQuestions > 0 ? Math.round((dom2Count / totalQuestions) * 100) : 0;
+
+    const dom1Label = document.getElementById('domain-i-label');
+    const dom2Label = document.getElementById('domain-ii-label');
+    
+    if (dom1Label) dom1Label.textContent = `Domain I • ${dom1Pct}%`;
+    if (dom2Label) dom2Label.textContent = `Domain II • ${dom2Pct}%`;
+
     // Weak areas
     renderWeakAreas();
 }
