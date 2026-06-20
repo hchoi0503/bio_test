@@ -434,6 +434,14 @@ async function initializeApp() {
     if (dashTotal) dashTotal.textContent = totalQ || '?';
     if (headerTotal) headerTotal.textContent = totalQ || '?';
 
+    // Populate sub-section filter dropdown (must be after questions are loaded)
+    if (typeof populateSubsectionFilter === 'function') {
+        populateSubsectionFilter();
+    }
+
+    // Initialize default filter
+    window.selectedFilter = 'all';
+
     // Set initial nav active state
     const dashboardNav = document.getElementById('nav-dashboard');
     if (dashboardNav) {
