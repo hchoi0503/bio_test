@@ -141,6 +141,14 @@ function showQuizQuestion() {
 }
 
 // ============================================
+// Helper: Normalize text for comparison (handles trailing periods, extra spaces, etc.)
+// ============================================
+function normalizeText(text) {
+    if (!text) return '';
+    return text.toString().trim().replace(/\.+$/, '').trim();
+}
+
+// ============================================
 // Answer Handling
 // ============================================
 
@@ -156,9 +164,11 @@ function selectAnswer(btn, selectedLetter, question) {
 
     // Flexible correctness check:
     // Works if correct is a letter (A/B/C/D) OR the full answer text
-    const correctVal = (question.correct || '').toString().trim();
-    const isLetterCorrect = selectedLetter === correctVal;
-    const isTextCorrect = selectedText === correctVal;
+    // Also normalizes trailing periods and extra spaces
+    const correctVal = normalizeText(question.correct);
+    const normSelectedText = normalizeText(selectedText);
+    const isLetterCorrect = selectedLetter === correctVal || normalizeText(selectedLetter) === correctVal;
+    const isTextCorrect = normSelectedText === correctVal;
     const isCorrect = isLetterCorrect || isTextCorrect;
 
     // Highlight correct/incorrect
@@ -171,9 +181,12 @@ function selectAnswer(btn, selectedLetter, question) {
             ? b.querySelector('.flex-1').textContent.trim() 
             : '';
 
-        if (letter === correctVal || optionText === correctVal) {
+        const normOptionText = normalizeText(optionText);
+        const normLetter = normalizeText(letter);
+
+        if (normLetter === correctVal || normOptionText === correctVal) {
             b.classList.add('correct', 'border-green-600');
-        } else if ((letter === selectedLetter || optionText === selectedText) && !isCorrect) {
+        } else if ((normLetter === normalizeText(selectedLetter) || normOptionText === normSelectedText) && !isCorrect) {
             b.classList.add('incorrect', 'border-red-600');
         }
     });
