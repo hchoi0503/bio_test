@@ -149,7 +149,17 @@ function selectAnswer(btn, selectedLetter, question) {
     const allBtns = document.querySelectorAll('#quiz-options button');
     allBtns.forEach(b => b.disabled = true);
 
-    const isCorrect = selectedLetter === question.correct;
+    // Get the text of the selected option
+    const selectedText = btn.querySelector('.flex-1') 
+        ? btn.querySelector('.flex-1').textContent.trim() 
+        : '';
+
+    // Flexible correctness check:
+    // Works if correct is a letter (A/B/C/D) OR the full answer text
+    const correctVal = (question.correct || '').toString().trim();
+    const isLetterCorrect = selectedLetter === correctVal;
+    const isTextCorrect = selectedText === correctVal;
+    const isCorrect = isLetterCorrect || isTextCorrect;
 
     // Highlight correct/incorrect
     allBtns.forEach(b => {
@@ -157,10 +167,13 @@ function selectAnswer(btn, selectedLetter, question) {
         if (!letterDiv) return;
 
         const letter = letterDiv.textContent.trim();
+        const optionText = b.querySelector('.flex-1') 
+            ? b.querySelector('.flex-1').textContent.trim() 
+            : '';
 
-        if (letter === question.correct) {
+        if (letter === correctVal || optionText === correctVal) {
             b.classList.add('correct', 'border-green-600');
-        } else if (letter === selectedLetter && !isCorrect) {
+        } else if ((letter === selectedLetter || optionText === selectedText) && !isCorrect) {
             b.classList.add('incorrect', 'border-red-600');
         }
     });
