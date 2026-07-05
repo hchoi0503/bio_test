@@ -16305,5 +16305,28 @@
     "note": "",
     "flagged": false,
     "last_reviewed": null
+  },
+  {
+    "id": "BIO-711",
+    "domain": "I",
+    "subsection": "I.A.3",
+    "topic": "Biomedical Sciences - Reproductive Endocrinology Progesterone Rises After Ovulation (Biomedical Sciences)",
+    "question": "1. What hormone increases after ovulation?",
+    "options": [
+      "Progesterone",
+      "Follicle-stimulating hormone (FSH)",
+      "Estrone",
+      "Luteinizing hormone (LH)"
+    ],
+    "correct": "Progesterone",
+    "explanation": "After ovulation, the corpus luteum forms and produces large amounts of progesterone, which rises sharply during the luteal phase. FSH decreases after ovulation. LH surges before ovulation and then drops. Estrone (an estrogen) does not show the characteristic post-ovulation rise that progesterone does.",
+    "difficulty": "Easy",
+    "mastered": false,
+    "seen": 0,
+    "correct_streak": 0,
+    "miss_count": 0,
+    "note": "",
+    "flagged": false,
+    "last_reviewed": null
   }
 ]
