@@ -16328,5 +16328,28 @@
     "note": "",
     "flagged": false,
     "last_reviewed": null
+  },
+  {
+    "id": "BIO-712",
+    "domain": "I",
+    "subsection": "I.A.3",
+    "topic": "Biomedical Sciences - Reproductive Endocrinology FSH Stimulates Follicle Growth (Biomedical Sciences)",
+    "question": "1. FSH stimulates",
+    "options": [
+      "The adrenal cortex",
+      "Immature follicles in the ovaries to grow",
+      "Menstruation",
+      "Sexual drive"
+    ],
+    "correct": "Immature follicles in the ovaries to grow",
+    "explanation": "FSH (follicle-stimulating hormone) stimulates the growth and maturation of ovarian follicles during the follicular phase. The adrenal cortex is stimulated by ACTH. Menstruation is triggered by estrogen/progesterone withdrawal. Sexual drive is primarily influenced by testosterone.",
+    "difficulty": "Easy",
+    "mastered": false,
+    "seen": 0,
+    "correct_streak": 0,
+    "miss_count": 0,
+    "note": "",
+    "flagged": false,
+    "last_reviewed": null
   }
 ]

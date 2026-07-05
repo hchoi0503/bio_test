@@ -15,13 +15,17 @@ window.userProgress = {};
  */
 async function loadQuestions() {
     try {
-        const response = await fetch('questions.json');
+        // Always fetch the latest questions.json (bypass browser cache)
+        const response = await fetch('questions.json', { 
+            cache: 'no-store' 
+        });
+        
         if (!response.ok) throw new Error('Failed to load questions.json');
         
         const data = await response.json();
         window.questions = data;
         
-        console.log(`[Data] Loaded ${window.questions.length} questions from questions.json`);
+        console.log(`[Data] Loaded ${window.questions.length} questions from questions.json (fresh)`);
         return window.questions;
     } catch (error) {
         console.error('[Data] Error loading questions:', error);
