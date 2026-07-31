@@ -11,6 +11,24 @@
 // ============================================
 // Section Navigation
 // ============================================
+const SUBSECTION_LABELS = {
+  "I.A":   "I.A – Biomedical Sciences (Overview)",
+  "I.A.1": "I.A.1 – Anatomy / Biomedical Sciences",
+  "I.A.2": "I.A.2 – Pharmacology",
+  "I.A.3": "I.A.3 – Nutrients & Supplements",
+  "I.B":   "I.B – Patient History & Physical Exam",
+  "I.B.10":"I.B – Patient History & Physical Exam (detail)",
+  "I.C":   "I.C – Clinical Assessment",
+  "I.D":   "I.D – Decision-Making & Standard of Care",
+  "I.E":   "I.E – (Additional Clinical)",
+  "II.A":  "II.A – Risk Management & Safety",
+  "II.B":  "II.B – Infection Control",
+  "II.C":  "II.C – Federal Regulations (OSHA/HIPAA)",
+  "II.D":  "II.D – Reporting & Record-Keeping",
+  "II.E":  "II.E – Ethics & Professionalism",
+  "II.F":  "II.F – Integration of TCM + Biomedicine"
+};
+
 
 function showSection(sectionName) {
     // Hide all sections
@@ -507,7 +525,7 @@ function populateSubsectionFilter() {
     [...subsections].sort().forEach(sub => {
         const opt = document.createElement('option');
         opt.value = sub;
-        opt.textContent = sub;
+        opt.textContent = SUBSECTION_LABELS[sub] || sub;
         select.appendChild(opt);
     });
 
