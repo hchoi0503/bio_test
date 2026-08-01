@@ -72,9 +72,10 @@ function startQuiz() {
         return;
     }
 
-    // Shuffle and take desired amount
-    filtered = shuffleArray(filtered);
-    currentQuiz = filtered.slice(0, selectedQuizLength);
+    // === FORCE RANDOM ORDER ===
+    // Always create a fresh shuffled copy of the entire filtered pool
+    const shuffled = shuffleArray([...filtered]);
+    currentQuiz = shuffled.slice(0, selectedQuizLength);
 
     currentQuizIndex = 0;
     currentQuizScore = 0;
